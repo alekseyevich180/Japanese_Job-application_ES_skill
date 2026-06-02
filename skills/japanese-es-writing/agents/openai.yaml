@@ -1,0 +1,4 @@
+interface:
+  display_name: "Japanese ES Writing"
+  short_description: "Draft and polish Japanese job-hunting Entry Sheets"
+  default_prompt: "Help me write or revise a Japanese Entry Sheet for job hunting."

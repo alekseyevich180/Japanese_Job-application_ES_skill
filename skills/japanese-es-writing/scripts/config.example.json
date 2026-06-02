@@ -1,0 +1,21 @@
+{
+  "sites": {
+    "example": {
+      "allowed_domains": ["example.com"],
+      "rate_seconds": 2,
+      "user_agent": "japanese-es-writing-research/1.0",
+      "session_cookie_env": "EXAMPLE_SESSION_COOKIE",
+      "login_url": "https://example.com/login",
+      "username_env": "EXAMPLE_USERNAME",
+      "password_env": "EXAMPLE_PASSWORD",
+      "username_field": "username",
+      "password_field": "password",
+      "csrf_field": "csrf_token",
+      "csrf_regex": "name=\"csrf_token\" value=\"([^\"]+)\"",
+      "login_payload": {
+        "remember": "1"
+      },
+      "headers": {}
+    }
+  }
+}
