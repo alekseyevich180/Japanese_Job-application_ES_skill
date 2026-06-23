@@ -143,6 +143,49 @@ skills/
 
 The skill includes `skills/japanese-es-writing/scripts/auth_fetch.py` for fetching pages that the user is authorized to access. Users must configure their own account credentials through environment variables.
 
+For OneCareer, use the browser-based helper instead of API calls:
+
+```powershell
+python .\skills\japanese-es-writing\scripts\onecareer_browser_fetch.py --companies .\skills\japanese-es-writing\scripts\onecareer_companies.example.txt --out fetched\onecareer
+```
+
+The helper opens a browser, lets you log in with your own OneCareer account, then iterates through a company list. For each company, open the exact OneCareer company, ES, or experience page in the browser and press Enter in the terminal to save the page text.
+
+Browser control is separated into:
+
+```text
+skills/japanese-es-writing/scripts/browser_control.py
+```
+
+Adjust Playwright launch settings, profile handling, viewport, timeouts, and page text extraction there. Keep OneCareer-specific company-list and saving logic in:
+
+```text
+skills/japanese-es-writing/scripts/onecareer_browser_fetch.py
+```
+
+After saving pages, create a digest for improving the Japanese ES writing references:
+
+```powershell
+python .\skills\japanese-es-writing\scripts\onecareer_es_digest.py --input fetched\onecareer --out fetched\onecareer_digest.md
+```
+
+Use the digest to learn common ES prompts and writing patterns. Do not copy OneCareer candidate answers verbatim into drafts or skill references.
+
+Install Playwright first if needed:
+
+```powershell
+python -m pip install playwright
+python -m playwright install chromium
+```
+
+Company list format:
+
+```text
+Sony Group
+KDDI
+Hitachi Systems,https://www.onecareer.jp/companies
+```
+
 Copy and edit the example config:
 
 ```text

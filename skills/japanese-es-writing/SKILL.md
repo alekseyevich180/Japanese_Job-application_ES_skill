@@ -39,11 +39,15 @@ Load only the reference needed for the task:
 - Read `references/japanese-style.md` for natural Japanese, ES tone, forbidden expressions, and revision checks.
 - Read `references/company-tailoring.md` when tailoring to a specific company, industry, or job type.
 - Read `references/output-patterns.md` when choosing response format, comparison tables, or multi-version output.
-- Read `references/web-research.md` when the user wants to fetch company pages, recruiting pages, or other web content with user-provided account configuration.
+- Read `references/web-research.md` when the user wants to fetch company pages, recruiting pages, OneCareer pages, or other web content with user-provided account/browser access.
 
 ## Web Research Helper
 
 Use `scripts/auth_fetch.py` only when the user asks to fetch web pages and provides, or agrees to configure, credentials for accounts they are authorized to use.
+
+Use `scripts/onecareer_browser_fetch.py` when the user asks to collect pages from OneCareer using their own account and browser login state. Ask for, or create, a company list file before running it.
+
+Use `scripts/onecareer_es_digest.py` after OneCareer pages have been saved and the goal is to improve ES writing references from collected examples. Treat the digest as pattern research only; do not copy candidate ES answers verbatim.
 
 Before using the helper:
 
@@ -51,6 +55,7 @@ Before using the helper:
 - Do not bypass CAPTCHA, paywalls, access controls, rate limits, or technical blocks.
 - Prefer public company and recruiting pages when possible.
 - Store credentials in environment variables, not in prompts, source files, or committed config.
+- Store browser profiles locally and do not commit `.browser-profiles/`.
 - Use the downloaded text only as context for ES tailoring; cite uncertainty if the page may be outdated or incomplete.
 
 ## Quality Checks

@@ -1,0 +1,5 @@
+# One company per line.
+# You can also provide a direct OneCareer URL after a comma.
+Sony Group
+KDDI
+Hitachi Systems,https://www.onecareer.jp/companies
