@@ -39,15 +39,15 @@ Load only the reference needed for the task:
 - Read `references/japanese-style.md` for natural Japanese, ES tone, forbidden expressions, and revision checks.
 - Read `references/company-tailoring.md` when tailoring to a specific company, industry, or job type.
 - Read `references/output-patterns.md` when choosing response format, comparison tables, or multi-version output.
-- Read `references/web-research.md` when the user wants to fetch company pages, recruiting pages, OneCareer pages, or other web content with user-provided account/browser access.
+- Read `references/web-research.md` when the user wants to fetch company pages, recruiting pages, career-plan or values pages, or use OneCareer ES research collected outside the skill.
 
 ## Web Research Helper
 
 Use `scripts/auth_fetch.py` only when the user asks to fetch web pages and provides, or agrees to configure, credentials for accounts they are authorized to use.
 
-Use `scripts/onecareer_browser_fetch.py` when the user asks to collect pages from OneCareer using their own account and browser login state. Ask for, or create, a company list file before running it.
+Use the independent `es-research/onecareer/` module when the user asks to collect OneCareer ES pages, company pages, career-plan pages, values, or 求める人物像 using their own account and browser login state. Ask for, or create, a company list file before running it.
 
-Use `scripts/onecareer_es_digest.py` after OneCareer pages have been saved and the goal is to improve ES writing references from collected examples. Treat the digest as pattern research only; do not copy candidate ES answers verbatim.
+Use `es-research/onecareer/onecareer_es_digest.py` after OneCareer pages have been saved and the goal is to improve ES writing references from collected examples. Treat the digest as pattern research only; do not copy candidate ES answers verbatim.
 
 Before using the helper:
 

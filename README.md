@@ -124,6 +124,12 @@ For better results, include:
 ## Project Structure
 
 ```text
+es-research/
+  onecareer/
+    README.md
+    browser_control.py
+    onecareer_browser_fetch.py
+    onecareer_es_digest.py
 skills/
   japanese-es-writing/
     SKILL.md
@@ -143,33 +149,39 @@ skills/
 
 The skill includes `skills/japanese-es-writing/scripts/auth_fetch.py` for fetching pages that the user is authorized to access. Users must configure their own account credentials through environment variables.
 
-For OneCareer, use the browser-based helper instead of API calls:
+For OneCareer ES and company-fit research, use the independent research module instead of putting browser collection inside a skill:
 
 ```powershell
-python .\skills\japanese-es-writing\scripts\onecareer_browser_fetch.py --companies .\skills\japanese-es-writing\scripts\onecareer_companies.example.txt --out fetched\onecareer
+python .\es-research\onecareer\onecareer_browser_fetch.py --companies .\es-research\onecareer\onecareer_companies.example.txt --out fetched\onecareer --allow-any-domain
 ```
 
-The helper opens a browser, lets you log in with your own OneCareer account, then iterates through a company list. For each company, open the exact OneCareer company, ES, or experience page in the browser and press Enter in the terminal to save the page text.
+The helper opens a browser, lets you log in with your own OneCareer account, then iterates through a company list. For each company, it can collect ES/体験談, OneCareer company pages, career-plan/career-path pages, and values/求める人物像 pages. Open the exact page in the browser and press Enter in the terminal to save the page text.
 
 Browser control is separated into:
 
 ```text
-skills/japanese-es-writing/scripts/browser_control.py
+es-research/onecareer/browser_control.py
 ```
 
 Adjust Playwright launch settings, profile handling, viewport, timeouts, and page text extraction there. Keep OneCareer-specific company-list and saving logic in:
 
 ```text
-skills/japanese-es-writing/scripts/onecareer_browser_fetch.py
+es-research/onecareer/onecareer_browser_fetch.py
 ```
 
 After saving pages, create a digest for improving the Japanese ES writing references:
 
 ```powershell
-python .\skills\japanese-es-writing\scripts\onecareer_es_digest.py --input fetched\onecareer --out fetched\onecareer_digest.md
+python .\es-research\onecareer\onecareer_es_digest.py --input fetched\onecareer --out fetched\onecareer_digest.md
 ```
 
 Use the digest to learn common ES prompts and writing patterns. Do not copy OneCareer candidate answers verbatim into drafts or skill references.
+
+The default research targets are `es,company,career,values`. To narrow the run:
+
+```powershell
+python .\es-research\onecareer\onecareer_browser_fetch.py --companies .\es-research\onecareer\onecareer_companies.example.txt --out fetched\onecareer --targets es,career,values --allow-any-domain
+```
 
 Install Playwright first if needed:
 
@@ -184,6 +196,12 @@ Company list format:
 Sony Group
 KDDI
 Hitachi Systems,https://www.onecareer.jp/companies
+```
+
+The agent-facing copy of this workflow is in:
+
+```text
+.agents/onecareer-es-research.md
 ```
 
 Copy and edit the example config:

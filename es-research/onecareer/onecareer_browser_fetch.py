@@ -31,6 +31,20 @@ ONECAREER_HOST_SUFFIXES = (
     "id.onecareer.jp",
 )
 
+TARGET_TEMPLATES = {
+    "es": "https://www.onecareer.jp/experiences?keyword={query}",
+    "company": "https://www.onecareer.jp/companies?keyword={query}",
+    "career": "https://www.google.com/search?q={query}+採用+キャリアプラン",
+    "values": "https://www.google.com/search?q={query}+採用+価値観+求める人物像",
+}
+
+TARGET_LABELS = {
+    "es": "OneCareer ES / selection experiences",
+    "company": "OneCareer company page",
+    "career": "career plan / career path research",
+    "values": "company values / desired candidate profile research",
+}
+
 
 def slugify(value: str) -> str:
     value = value.strip()
@@ -76,11 +90,12 @@ def build_search_url(template: str, company: str) -> str:
     return template.format(query=encoded, company=encoded)
 
 
-def write_page(out_dir: Path, company: str, url: str, title: str, html: str, text: str) -> None:
+def write_page(out_dir: Path, company: str, page_type: str, url: str, title: str, html: str, text: str) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     slug = slugify(company)
+    type_slug = slugify(page_type)
     stamp = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
-    base = out_dir / f"{slug}_{stamp}"
+    base = out_dir / f"{slug}_{type_slug}_{stamp}"
 
     html_path = base.with_suffix(".html")
     text_path = base.with_suffix(".txt")
@@ -92,6 +107,7 @@ def write_page(out_dir: Path, company: str, url: str, title: str, html: str, tex
         json.dumps(
             {
                 "company": company,
+                "page_type": page_type,
                 "url": url,
                 "title": title,
                 "saved_at": dt.datetime.now(dt.timezone.utc).isoformat(),
@@ -110,6 +126,7 @@ def write_page(out_dir: Path, company: str, url: str, title: str, html: str, tex
             json.dumps(
                 {
                     "company": company,
+                    "page_type": page_type,
                     "url": url,
                     "title": title,
                     "text": str(text_path),
@@ -137,6 +154,29 @@ def iter_companies(companies: Iterable[dict[str, str]]) -> Iterable[dict[str, st
         yield company
 
 
+def parse_targets(raw_targets: str) -> list[str]:
+    targets = [target.strip() for target in raw_targets.split(",") if target.strip()]
+    unknown = [target for target in targets if target not in TARGET_TEMPLATES]
+    if unknown:
+        raise SystemExit(f"Unknown research target(s): {', '.join(unknown)}")
+    return targets
+
+
+def target_url(target: str, company: dict[str, str], search_url_template: str) -> str:
+    if target == "es" and company["url"]:
+        return company["url"]
+    template = search_url_template if target == "es" else TARGET_TEMPLATES[target]
+    return build_search_url(template, company["name"])
+
+
+def can_save_url(url: str, *, allow_any_domain: bool) -> bool:
+    if host_allowed(url):
+        return True
+    if allow_any_domain and urllib.parse.urlparse(url).scheme in {"http", "https"}:
+        return True
+    return False
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Interactively collect authorized OneCareer pages.")
     parser.add_argument("--companies", required=True, help="Text or CSV file with company names.")
@@ -149,9 +189,20 @@ def main() -> int:
     )
     parser.add_argument("--headless", action="store_true", help="Run browser headless. Not recommended for login.")
     parser.add_argument("--timeout-ms", type=int, default=15000, help="Page load timeout in milliseconds.")
+    parser.add_argument(
+        "--targets",
+        default="es,company,career,values",
+        help="Comma-separated targets: es, company, career, values.",
+    )
+    parser.add_argument(
+        "--allow-any-domain",
+        action="store_true",
+        help="Allow saving official/recruiting pages outside OneCareer after manual confirmation.",
+    )
     args = parser.parse_args()
 
     companies = read_companies(Path(args.companies))
+    targets = parse_targets(args.targets)
     out_dir = Path(args.out)
     settings = BrowserSettings(
         profile_dir=Path(args.profile),
@@ -165,33 +216,50 @@ def main() -> int:
         browser.goto("https://www.onecareer.jp/")
         prompt_continue("Press Enter after login is ready, or type q to quit: ")
 
+        should_quit = False
         for company in iter_companies(companies):
-            target_url = company["url"] or build_search_url(args.search_url_template, company["name"])
-            if not host_allowed(target_url):
-                print(f"Skipped non-OneCareer URL: {target_url}")
-                continue
+            for target in targets:
+                print(f"Target: {target} - {TARGET_LABELS[target]}")
+                start_url = target_url(target, company, args.search_url_template)
+                if not can_save_url(start_url, allow_any_domain=True):
+                    print(f"Skipped unsupported URL: {start_url}")
+                    continue
 
-            loaded = browser.goto(target_url)
-            if not loaded:
-                print("Page load timed out. You can still adjust the page manually.")
+                loaded = browser.goto(start_url)
+                if not loaded:
+                    print("Page load timed out. You can still adjust the page manually.")
 
-            print("Use the browser to open the exact OneCareer page you want to save.")
-            print("For ES research, open the company, ES, or experience page that is useful.")
-            action = prompt_continue("Press Enter to save current page, s to skip, q to quit: ")
-            if action == "q":
+                print("Use the browser to open the exact page you want to save.")
+                if target == "es":
+                    print("Open a OneCareer ES, interview, or selection-experience page.")
+                elif target == "company":
+                    print("Open the OneCareer company page or relevant company overview page.")
+                elif target == "career":
+                    print("Open a career plan, career path, recruiting, or employee-growth page.")
+                elif target == "values":
+                    print("Open a values, mission, culture, or desired-candidate-profile page.")
+
+                action = prompt_continue("Press Enter to save current page, s to skip, n for next company, q to quit: ")
+                if action == "q":
+                    should_quit = True
+                    break
+                if action == "n":
+                    break
+                if action == "s":
+                    continue
+
+                current_url = browser.current_url()
+                if not can_save_url(current_url, allow_any_domain=args.allow_any_domain):
+                    print(f"Refusing to save outside OneCareer without --allow-any-domain: {current_url}")
+                    continue
+
+                title = browser.title()
+                html = browser.html()
+                text = browser.body_text()
+                write_page(out_dir, company["name"], target, current_url, title, html, text)
+
+            if should_quit:
                 break
-            if action == "s":
-                continue
-
-            current_url = browser.current_url()
-            if not host_allowed(current_url):
-                print(f"Refusing to save non-OneCareer page: {current_url}")
-                continue
-
-            title = browser.title()
-            html = browser.html()
-            text = browser.body_text()
-            write_page(out_dir, company["name"], current_url, title, html, text)
 
     return 0
 

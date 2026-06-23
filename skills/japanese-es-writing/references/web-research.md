@@ -24,16 +24,16 @@ The script supports:
 - Rate limiting per request.
 - HTML and extracted text output.
 
-## OneCareer Browser Fetching
+## OneCareer ES Research Module
 
-Use `scripts/onecareer_browser_fetch.py` when the user wants to collect ES, interview, experience, or company pages from OneCareer with their own account and API-style access is unreliable.
+Use the independent `es-research/onecareer/` module when the user wants to collect ES, interview, experience, company, career-plan, career-path, values, or 求める人物像 pages with their own account/browser access. OneCareer collection is intentionally outside this skill package.
 
 This workflow is semi-automatic:
 
 1. Prepare a company list, one company per line.
 2. Run the browser script.
 3. Log in to OneCareer in the opened browser.
-4. For each company, use the browser to open the exact company, ES, or experience page.
+4. For each company, use the browser to open the exact ES, experience, company, career, values, or recruiting page.
 5. Press Enter in the terminal to save the current page as `.html`, `.txt`, and `.json`.
 
 Example company list:
@@ -47,18 +47,26 @@ Hitachi Systems,https://www.onecareer.jp/companies
 Run:
 
 ```bash
-python skills/japanese-es-writing/scripts/onecareer_browser_fetch.py --companies skills/japanese-es-writing/scripts/onecareer_companies.example.txt --out fetched/onecareer
+python es-research/onecareer/onecareer_browser_fetch.py --companies es-research/onecareer/onecareer_companies.example.txt --out fetched/onecareer --allow-any-domain
 ```
 
-Browser mechanics are isolated in `scripts/browser_control.py`. Edit that file when changing Playwright launch behavior, profile handling, viewport size, timeout behavior, or text extraction. Keep OneCareer-specific search and saving logic in `scripts/onecareer_browser_fetch.py`.
+Default targets are `es,company,career,values`. To narrow collection:
+
+```bash
+python es-research/onecareer/onecareer_browser_fetch.py --companies es-research/onecareer/onecareer_companies.example.txt --out fetched/onecareer --targets es,career,values --allow-any-domain
+```
+
+Browser mechanics are isolated in `es-research/onecareer/browser_control.py`. Edit that file when changing Playwright launch behavior, profile handling, viewport size, timeout behavior, or text extraction. Keep OneCareer-specific search and saving logic in `es-research/onecareer/onecareer_browser_fetch.py`.
 
 After collecting pages, create a writing-research digest:
 
 ```bash
-python skills/japanese-es-writing/scripts/onecareer_es_digest.py --input fetched/onecareer --out fetched/onecareer_digest.md
+python es-research/onecareer/onecareer_es_digest.py --input fetched/onecareer --out fetched/onecareer_digest.md
 ```
 
-Use the digest to identify common ES prompts, selection-stage keywords, and recurring writing patterns. Do not copy candidate ES answers into user drafts or reference files verbatim.
+Use the digest to identify common ES prompts, selection-stage keywords, career-plan language, value/culture keywords, 求める人物像, and recurring writing patterns. Do not copy candidate ES answers into user drafts or reference files verbatim.
+
+An agent-facing copy of the workflow is available at `.agents/onecareer-es-research.md`.
 
 Install dependencies if needed:
 
