@@ -1,8 +1,14 @@
-# Japanese ES Writing Codex Skill
+# Job Application Writing Codex Skills
 
-This project packages a Codex skill for writing and revising Japanese job-hunting Entry Sheets.
+This project packages Codex skills for Japanese and English job-application writing.
 
-It is designed for Chinese-speaking applicants who need help with:
+Included skills:
+
+- `japanese-es-writing`: Japanese Entry Sheet writing for Japanese companies and foreign/global companies in Japan.
+- `nature-polishing`: English polishing, restructuring, and Chinese-to-English rewriting support.
+- `nature-writing`: English structure drafting from claims, notes, and rough source material.
+
+The main ES skill is designed for Chinese-speaking applicants who need help with:
 
 - 志望動機
 - 自己PR
@@ -11,6 +17,7 @@ It is designed for Chinese-speaking applicants who need help with:
 - 面接想定問答
 - Chinese notes to natural Japanese ES prose
 - Company-specific rewriting for Japanese companies and foreign companies
+- English application writing and polishing for foreign companies
 - Word-count reduction and polishing
 - User-authorized web page fetching for company research
 
@@ -30,16 +37,18 @@ bash install.sh
 
 Manual install:
 
-Copy `skills/japanese-es-writing` into your Codex skills directory:
+Copy the needed directories under `skills/` into your Codex skills directory:
 
 ```text
 ~/.codex/skills/japanese-es-writing
+~/.codex/skills/nature-polishing
+~/.codex/skills/nature-writing
 ```
 
 If `CODEX_HOME` is set, copy it into:
 
 ```text
-$CODEX_HOME/skills/japanese-es-writing
+$CODEX_HOME/skills/<skill-name>
 ```
 
 ## Use
@@ -66,6 +75,13 @@ skills/
     SKILL.md
     agents/openai.yaml
     scripts/
+    references/
+  nature-polishing/
+    SKILL.md
+    references/
+  nature-writing/
+    SKILL.md
+    agents/
     references/
 ```
 
