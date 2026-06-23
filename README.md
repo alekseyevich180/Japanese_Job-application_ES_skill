@@ -53,19 +53,73 @@ $CODEX_HOME/skills/<skill-name>
 
 ## Use
 
-After installation, start a new Codex session and ask for tasks such as:
+After installation, start a new Codex session. You can either name a skill explicitly or describe the task naturally. Naming the skill is useful when you want precise routing.
+
+## Which Skill To Use
+
+| Task | Use this skill | Typical request |
+|---|---|---|
+| Japanese ES for Japanese companies | `japanese-es-writing` | `用 japanese-es-writing 帮我写三菱商事的志望動機，400字以内。` |
+| Japanese ES for foreign/global companies in Japan | `japanese-es-writing` | `用 japanese-es-writing 帮我针对 Google Japan 的 software engineer 岗位改一版日语自己PR。` |
+| Chinese notes to natural Japanese ES | `japanese-es-writing` | `把这段中文经历改成日语ガクチカ，300字以内，语气适合日本就活。` |
+| English application draft from notes | `nature-writing` | `用 nature-writing 根据这些中文要点写一版英文 cover letter。` |
+| English ES / motivation statement structure | `nature-writing` | `用 nature-writing 帮我组织外企申请的英文 Why this company answer，200 words。` |
+| Polish existing English application text | `nature-polishing` | `用 nature-polishing 润色这段英文 personal statement，让它更自然、更职业。` |
+| Chinese draft to polished English | `nature-polishing` | `把这段中文申请理由改成英文，不要直译，适合外企申请。` |
+
+## Recommended Workflows
+
+### Japanese ES
+
+1. Use `japanese-es-writing` for the draft.
+2. Provide company name, role, word or character limit, your experience, and the strength you want to show.
+3. Ask for a stricter version if the first draft is too generic or too long.
+
+Example:
 
 ```text
 用 japanese-es-writing 帮我把这段中文经历改成 400 字以内的日语ガクチカ。
 ```
 
-```text
-帮我针对索尼的软件工程岗位重写一版志望動機。
-```
+### English Application Writing
+
+Use `nature-writing` when you only have notes or Chinese material and need a new English answer.
 
 ```text
-请润色这篇日语自己PR，让它更像日本就活 ES。
+用 nature-writing 根据下面的中文经历写一版 250 words 的英文 motivation statement，目标是外企材料研发岗位。
 ```
+
+Use `nature-polishing` when you already have an English draft and need revision.
+
+```text
+用 nature-polishing 润色下面这段英文 cover letter，保持真实经历，不要夸大。
+```
+
+### Japanese And English Versions
+
+When you need both languages, draft the content logic once, then adapt by language:
+
+1. Use `japanese-es-writing` for the Japanese ES version.
+2. Use `nature-writing` to build the English version from the same facts.
+3. Use `nature-polishing` for final English tone and concision.
+
+Example:
+
+```text
+先用 japanese-es-writing 帮我写日语自己PR，再用 nature-writing 基于同一经历写英文版，最后用 nature-polishing 压到 180 words。
+```
+
+## Information To Provide
+
+For better results, include:
+
+- Target company and role
+- Language: Japanese or English
+- Output type: 志望動機, 自己PR, ガクチカ, cover letter, motivation statement, personal statement, career goals
+- Word or character limit
+- Your real experience, actions, result, and reflection
+- What strength you want to emphasize
+- Company research notes or job description, if available
 
 ## Project Structure
 

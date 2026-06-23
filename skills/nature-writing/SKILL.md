@@ -1,14 +1,17 @@
 ---
 name: nature-writing
-description: Draft, restructure, or plan high-quality English prose from author-provided claims, evidence, notes, or Chinese drafts. Use for Nature-style manuscript sections and also for English job-application writing, including foreign-company ES answers, cover letters, motivation statements, personal statements, career goals, and structured English application drafts.
-version: 0.2.0
-author: Community contribution based on curated Nature/Nature Communications writing patterns and open research-writing notes
+description: Draft, restructure, or plan English job-application prose for Chinese-speaking applicants from notes, claims, evidence, or Chinese drafts. Use when the user needs a new English foreign-company ES answer, cover letter, motivation statement, personal statement, career goals essay, role-fit answer, professional bio, research statement, or structured academic/research English draft.
 ---
 
-# Nature-Style Scientific Writing
+# English Application And Scientific Writing
 
-Use this skill when the user needs help creating or rebuilding manuscript prose,
-not merely polishing existing sentences.
+Use this skill when the user needs a new English draft or structure, not merely sentence polishing. For job applications, build the argument around the target role and the applicant's real evidence. For academic text, use the scientific-writing references as needed.
+
+## Routing
+
+- Use this skill for drafting from notes, Chinese source material, or incomplete outlines.
+- Use `nature-polishing` instead when the user already has an English draft and wants style, clarity, or concision.
+- Use `japanese-es-writing` instead when the target output is Japanese ES prose.
 
 ## Core stance
 
@@ -20,7 +23,7 @@ not merely polishing existing sentences.
 - If essential evidence is missing, write a placeholder or ask for the missing
   input instead of filling the gap.
 
-## Job Application English Adaptation
+## Job Application English
 
 When the target is a job application, internship, foreign company, or global company:
 
@@ -29,6 +32,7 @@ When the target is a job application, internship, foreign company, or global com
 - Use concrete experience, decisions, actions, constraints, and outcomes.
 - Avoid academic paper architecture unless the user is writing a research statement.
 - Do not invent achievements, metrics, internships, awards, language ability, or company research.
+- Ask only for missing details that materially affect the answer: target company, role, limit, experience, result, and intended strength.
 
 ## When to open extra files
 
@@ -50,6 +54,7 @@ When the target is a job application, internship, foreign company, or global com
 
 Before drafting, identify:
 
+- application context: company, role, answer type, word limit, and intended strength
 - manuscript section: title, abstract, introduction, results, discussion,
   conclusion, significance paragraph or full outline
 - paper type: mechanism, method, resource, device, model, clinical, materials,

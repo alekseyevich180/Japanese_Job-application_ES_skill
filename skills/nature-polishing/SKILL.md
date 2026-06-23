@@ -1,20 +1,17 @@
 ---
 name: nature-polishing
-description: Polish, restructure, or translate English prose using Nature-leaning clarity, argument, and phrase-level support. Use for academic prose and also for English job-application writing, including foreign-company ES answers, cover letters, motivation statements, personal statements, career goals, and Chinese-to-English application drafts.
-version: 5.0.2
-author: Yuan1z skill rebuilt from course notes plus Academic Phrasebank
+description: Polish, restructure, or translate English job-application prose for Chinese-speaking applicants. Use when the user asks to improve or translate existing English or Chinese drafts for foreign-company ES answers, cover letters, motivation statements, personal statements, career goals, LinkedIn-style summaries, professional bios, concise role-fit answers, or academic/research English when publication-quality clarity is needed.
 ---
 
-# Nature-Style Academic Polishing
+# English Application And Academic Polishing
 
-Use this skill to improve scientific writing at two levels:
+Use this skill when the user already has a draft, rough English, or Chinese source text and needs stronger English. For job applications, prioritize role fit, evidence, motivation, and professional tone. For academic text, use the Nature-style writing guidance as needed.
 
-- `main strategy`: paper architecture, published-article patterns, section logic, reader workflow, evidence thresholds, and ethics
-- `reference support`: reusable phrase families, move patterns, transitions, and style checks
+## Routing
 
-The main strategy should come from the course notes in `Chapter1-Week1-7` and
-the curated article-pattern reference. The wording layer should come from
-`Academic Phrasebank`.
+- Use this skill for polishing, shortening, restructuring, and Chinese-to-English rewriting.
+- Use `nature-writing` instead when the user has only notes and needs a new English draft.
+- Use `japanese-es-writing` instead when the target output is Japanese ES prose.
 
 ## Default stance
 
@@ -26,7 +23,7 @@ the curated article-pattern reference. The wording layer should come from
 - If the draft is Chinese or structurally rough, reconstruct the logic first and the prose second.
 - Avoid em dashes in polished output by default. Prefer commas, parentheses, or full stops. Use colons sparingly unless the user explicitly asks to preserve dash-based punctuation or wants a colon-led style.
 
-## Job Application English Adaptation
+## Job Application English
 
 When the user is writing for job applications, internships, foreign companies, or global companies:
 
@@ -35,6 +32,7 @@ When the user is writing for job applications, internships, foreign companies, o
 - Convert Chinese experience notes into natural, concise English application prose.
 - Keep the applicant confident but specific. Avoid exaggerated leadership claims, vague passion, and generic compliments.
 - For cover letters or English ES answers, preserve the user's real experience and make the contribution to the role explicit.
+- If the user gives a limit, enforce it. If exact word count matters, count or state that the count is approximate.
 
 ## When to open extra files
 
