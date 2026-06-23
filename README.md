@@ -1,21 +1,8 @@
-# Codex Skills Collection
+# Japanese ES Writing Codex Skill
 
-This project packages Codex skills, including Japanese Entry Sheet writing support and Nature-style academic workflows.
+This project packages a Codex skill for writing and revising Japanese job-hunting Entry Sheets.
 
-Included skills:
-
-- `japanese-es-writing`
-- `nature-academic-search`
-- `nature-citation`
-- `nature-data`
-- `nature-figure`
-- `nature-paper2ppt`
-- `nature-polishing`
-- `nature-reader`
-- `nature-response`
-- `nature-writing`
-
-The Japanese ES skill is designed for Chinese-speaking applicants who need help with:
+It is designed for Chinese-speaking applicants who need help with:
 
 - 志望動機
 - 自己PR
@@ -23,7 +10,7 @@ The Japanese ES skill is designed for Chinese-speaking applicants who need help 
 - 研究概要
 - 面接想定問答
 - Chinese notes to natural Japanese ES prose
-- Company-specific rewriting
+- Company-specific rewriting for Japanese companies and foreign companies
 - Word-count reduction and polishing
 - User-authorized web page fetching for company research
 
@@ -43,16 +30,16 @@ bash install.sh
 
 Manual install:
 
-Copy any directory under `skills/` into your Codex skills directory:
+Copy `skills/japanese-es-writing` into your Codex skills directory:
 
 ```text
-~/.codex/skills/<skill-name>
+~/.codex/skills/japanese-es-writing
 ```
 
 If `CODEX_HOME` is set, copy it into:
 
 ```text
-$CODEX_HOME/skills/<skill-name>
+$CODEX_HOME/skills/japanese-es-writing
 ```
 
 ## Use
@@ -76,15 +63,10 @@ After installation, start a new Codex session and ask for tasks such as:
 ```text
 skills/
   japanese-es-writing/
-  nature-academic-search/
-  nature-citation/
-  nature-data/
-  nature-figure/
-  nature-paper2ppt/
-  nature-polishing/
-  nature-reader/
-  nature-response/
-  nature-writing/
+    SKILL.md
+    agents/openai.yaml
+    scripts/
+    references/
 ```
 
 ## Optional Web Fetching

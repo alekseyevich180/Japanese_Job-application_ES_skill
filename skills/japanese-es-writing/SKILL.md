@@ -1,6 +1,6 @@
 ---
 name: japanese-es-writing
-description: Draft, revise, translate, and polish Japanese job-hunting Entry Sheets for Chinese-speaking applicants. Use when the user asks for Japanese ES support, including 志望動機, 自己PR, ガクチカ, 学生時代に力を入れたこと, 研究概要, キャリアプラン, 長所短所, 面接想定問答, word-count reduction or expansion, Japanese naturalness checks, company-specific tailoring, or converting Chinese experience notes into Japanese application prose.
+description: Draft, revise, translate, and polish Japanese job-hunting Entry Sheets for Chinese-speaking applicants applying to Japanese companies or foreign/global companies in Japan. Use when the user asks for Japanese ES support, including 志望動機, 自己PR, ガクチカ, 学生時代に力を入れたこと, 研究概要, キャリアプラン, 長所短所, 面接想定問答, word-count reduction or expansion, Japanese naturalness checks, company-specific tailoring, foreign-company/global-company fit, or converting Chinese experience notes into Japanese application prose.
 ---
 
 # Japanese ES Writing
@@ -12,7 +12,7 @@ First identify the target output:
 - New draft from raw notes
 - Revision of an existing Japanese ES
 - Chinese-to-Japanese conversion
-- Company-specific tailoring
+- Company-specific tailoring for Japanese companies or foreign/global companies in Japan
 - Shortening, expanding, or tone adjustment
 - Interview follow-up preparation
 
